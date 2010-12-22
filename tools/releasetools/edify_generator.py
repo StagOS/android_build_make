@@ -162,6 +162,9 @@ class EdifyGenerator(object):
       p = fstab[mount_point]
     self.script.append('run_program("/tmp/install/bin/system-mount.sh", "%s", "%s");' % (command, p.device))
 
+  def RunBackup(self, command):
+    self.script.append(('run_program("/tmp/install/bin/backuptool.sh", "%s");' % command))
+
   def ShowProgress(self, frac, dur):
     """Update the progress bar, advancing it over 'frac' over the next
     'dur' seconds.  'dur' may be zero to advance it via SetProgress

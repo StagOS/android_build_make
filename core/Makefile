@@ -1243,6 +1243,12 @@ else
 ifdef GENERIC_KERNEL_CMDLINE
   INTERNAL_BOOTIMAGE_ARGS += --cmdline "$(GENERIC_KERNEL_CMDLINE)"
 endif
+ifdef BOARD_KERNEL_TAGS_OFFSET
+  INTERNAL_BOOTIMAGE_ARGS += --tags_offset $(BOARD_KERNEL_TAGS_OFFSET)
+endif
+ifdef BOARD_RAMDISK_OFFSET
+  INTERNAL_BOOTIMAGE_ARGS += --ramdisk_offset $(BOARD_RAMDISK_OFFSET)
+endif
 endif
 
 INTERNAL_MKBOOTIMG_VERSION_ARGS := \
@@ -2196,6 +2202,12 @@ ifdef BOARD_INCLUDE_RECOVERY_ACPIO
 endif
 ifdef BOARD_INCLUDE_DTB_IN_BOOTIMG
   INTERNAL_RECOVERYIMAGE_ARGS += --dtb $(INSTALLED_DTBIMAGE_TARGET)
+endif
+ifdef BOARD_KERNEL_TAGS_OFFSET
+  INTERNAL_RECOVERYIMAGE_ARGS += --tags_offset $(BOARD_KERNEL_TAGS_OFFSET)
+endif
+ifdef BOARD_RAMDISK_OFFSET
+  INTERNAL_RECOVERYIMAGE_ARGS += --ramdisk_offset $(BOARD_RAMDISK_OFFSET)
 endif
 endif # INSTALLED_VENDOR_BOOTIMAGE_TARGET not defined
 ifndef BOARD_RECOVERY_MKBOOTIMG_ARGS
@@ -4691,6 +4703,12 @@ endif
 ifdef BOARD_KERNEL_PAGESIZE
 	echo "$(BOARD_KERNEL_PAGESIZE)" > $(zip_root)/$(PRIVATE_RECOVERY_OUT)/pagesize
 endif
+ifdef BOARD_KERNEL_TAGS_OFFSET
+	$(hide) echo "$(BOARD_KERNEL_TAGS_OFFSET)" > $(zip_root)/$(PRIVATE_RECOVERY_OUT)/tags_offset
+endif
+ifdef BOARD_RAMDISK_OFFSET
+	$(hide) echo "$(BOARD_RAMDISK_OFFSET)" > $(zip_root)/$(PRIVATE_RECOVERY_OUT)/ramdisk_offset
+endif
 ifeq ($(strip $(BOARD_KERNEL_SEPARATED_DT)),true)
 	$(hide) $(ACP) $(INSTALLED_DTIMAGE_TARGET) $(zip_root)/$(PRIVATE_RECOVERY_OUT)/dt
 endif
@@ -4723,6 +4741,12 @@ ifdef BOARD_KERNEL_BASE
 endif
 ifdef BOARD_KERNEL_PAGESIZE
 	echo "$(BOARD_KERNEL_PAGESIZE)" > $(zip_root)/BOOT/pagesize
+endif
+ifdef BOARD_KERNEL_TAGS_OFFSET
+	$(hide) echo "$(BOARD_KERNEL_TAGS_OFFSET)" > $(zip_root)/BOOT/tags_offset
+endif
+ifdef BOARD_RAMDISK_OFFSET
+	$(hide) echo "$(BOARD_RAMDISK_OFFSET)" > $(zip_root)/BOOT/ramdisk_offset
 endif
 ifeq ($(strip $(BOARD_KERNEL_SEPARATED_DT)),true)
 	$(hide) $(ACP) $(INSTALLED_DTIMAGE_TARGET) $(zip_root)/BOOT/dt

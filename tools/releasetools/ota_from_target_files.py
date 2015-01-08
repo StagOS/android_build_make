@@ -249,7 +249,7 @@ METADATA_NAME = 'META-INF/com/android/metadata'
 POSTINSTALL_CONFIG = 'META/postinstall_config.txt'
 DYNAMIC_PARTITION_INFO = 'META/dynamic_partitions_info.txt'
 AB_PARTITIONS = 'META/ab_partitions.txt'
-UNZIP_PATTERN = ['IMAGES/*', 'META/*', 'RADIO/*', 'INSTALL/*']
+UNZIP_PATTERN = ['IMAGES/*', 'META/*', 'RADIO/*', 'INSTALL/*', 'SYSTEM/build.prop']
 RETROFIT_DAP_UNZIP_PATTERN = ['OTA/super_*.img', AB_PARTITIONS]
 
 # Images to be excluded from secondary payload. We essentially only keep
@@ -1050,6 +1050,9 @@ endif;
   script.AddToZip(input_zip, output_zip, input_path=OPTIONS.updater_binary)
   metadata["ota-required-cache"] = str(script.required_cache)
 
+  common.ZipWriteStr(output_zip, "system/build.prop",
+                     ""+input_zip.read("SYSTEM/build.prop"))
+
   # We haven't written the metadata entry, which will be done in
   # FinalizeMetadata.
   common.ZipClose(output_zip)
@@ -1846,6 +1849,9 @@ endif;
     script.AddToZip(target_zip, output_zip, input_path=OPTIONS.updater_binary)
   metadata["ota-required-cache"] = str(script.required_cache)
 
+  common.ZipWriteStr(output_zip, "system/build.prop",
+                     ""+target_zip.read("SYSTEM/build.prop"))
+
   # We haven't written the metadata entry yet, which will be handled in
   # FinalizeMetadata().
   common.ZipClose(output_zip)
@@ -2131,6 +2137,11 @@ def WriteABOTAPackageWithBrilloScript(target_file, output_file,
                                additional_args=additional_args)
     secondary_payload.Sign(payload_signer)
     secondary_payload.WriteToZip(output_zip)
+
+  target_zip = zipfile.ZipFile(target_file, "r")
+  common.ZipWriteStr(output_zip, "system/build.prop",
+                     target_zip.read("SYSTEM/build.prop"))
+  common.ZipClose(target_zip)
 
   # If dm-verity is supported for the device, copy contents of care_map
   # into A/B OTA package.

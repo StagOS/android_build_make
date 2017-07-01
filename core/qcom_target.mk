@@ -55,13 +55,13 @@ ifeq ($(BOARD_USES_QTI_HARDWARE),true)
     # Allow building audio encoders
     TARGET_USES_QCOM_MM_AUDIO := true
 
-    # Enable color metadata for 8xx UM targets
-    ifneq ($(filter msm8996 msm8998,$(TARGET_BOARD_PLATFORM)),)
+    # Enable color metadata for modern UM targets
+    ifneq ($(filter msm8996 msm8998 sdm660,$(TARGET_BOARD_PLATFORM)),)
         TARGET_USES_COLOR_METADATA := true
     endif
 
     # List of targets that use master side content protection
-    MASTER_SIDE_CP_TARGET_LIST := msm8996 msm8998
+    MASTER_SIDE_CP_TARGET_LIST := msm8996 msm8998 sdm660
 
     ifeq ($(call is-board-platform-in-list, $(B_FAMILY)),true)
         MSM_VIDC_TARGET_LIST := $(B_FAMILY)

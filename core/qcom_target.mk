@@ -52,6 +52,9 @@ ifeq ($(BOARD_USES_QTI_HARDWARE),true)
         endif
     endif
 
+    # Allow building audio encoders
+    TARGET_USES_QCOM_MM_AUDIO := true
+
     ifeq ($(call is-board-platform-in-list, $(B_FAMILY)),true)
         MSM_VIDC_TARGET_LIST := $(B_FAMILY)
         QCOM_HARDWARE_VARIANT := msm8974

@@ -121,3 +121,7 @@ $(call wlan-set-path-variant,wlan)
 $(call bt-vendor-set-path-variant,bt)
 
 endif
+
+ifeq ($(call is-board-platform-in-list, $(QCOM_BOARD_PLATFORMS)),true)
+    -include vendor/qcom/perf/BoardConfigVendor.mk
+endif

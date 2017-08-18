@@ -35,10 +35,6 @@ ifeq ($(BOARD_USES_QTI_HARDWARE),true)
     UM_3_18_FAMILY := msm8937 msm8953 msm8996
     UM_4_4_FAMILY := msm8998 sdm660
 
-    qcom_flags := -DQCOM_HARDWARE
-    qcom_flags += -DQCOM_BSP
-    qcom_flags += -DQTI_BSP
-
     BOARD_USES_ADRENO := true
 
     # UM platforms no longer need this set on O+
@@ -50,30 +46,11 @@ ifeq ($(BOARD_USES_QTI_HARDWARE),true)
     TARGET_COMPILE_WITH_MSM_KERNEL := true
 
     ifneq ($(filter msm7x27a msm7x30 msm8660 msm8960,$(TARGET_BOARD_PLATFORM)),)
-        # Enable legacy graphics functions
-        qcom_flags += -DQCOM_BSP_LEGACY
         # Enable legacy audio functions
         ifeq ($(BOARD_USES_LEGACY_ALSA_AUDIO),true)
             USE_CUSTOM_AUDIO_POLICY := 1
-            qcom_flags += -DLEGACY_ALSA_AUDIO
         endif
     endif
-
-    # Enable extra offloading for post-805 targets
-    ifneq ($(filter msm8992 msm8994,$(TARGET_BOARD_PLATFORM)),)
-        qcom_flags += -DHAS_EXTRA_FLAC_METADATA
-    endif
-
-    TARGET_GLOBAL_CFLAGS += $(qcom_flags)
-    TARGET_GLOBAL_CPPFLAGS += $(qcom_flags)
-    CLANG_TARGET_GLOBAL_CFLAGS += $(qcom_flags)
-    CLANG_TARGET_GLOBAL_CPPFLAGS += $(qcom_flags)
-
-    # Multiarch needs these too..
-    2ND_TARGET_GLOBAL_CFLAGS += $(qcom_flags)
-    2ND_TARGET_GLOBAL_CPPFLAGS += $(qcom_flags)
-    2ND_CLANG_TARGET_GLOBAL_CFLAGS += $(qcom_flags)
-    2ND_CLANG_TARGET_GLOBAL_CPPFLAGS += $(qcom_flags)
 
     ifeq ($(call is-board-platform-in-list, $(B_FAMILY)),true)
         MSM_VIDC_TARGET_LIST := $(B_FAMILY)

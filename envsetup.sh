@@ -828,6 +828,20 @@ function lunch()
     fi
 
     check_product $product
+    if [ $? -ne 0 ]
+    then
+        # if we can't find a product, try to grab it off the StagOS-Devices GitHub
+        T=$(gettop)
+        cd $T > /dev/null
+        vendor/stag/build/tools/roomservice.py $product
+        cd - > /dev/null
+        check_product $product
+    else
+        T=$(gettop)
+        cd $T > /dev/null
+        vendor/stag/build/tools/roomservice.py $product true
+        cd - > /dev/null
+    fi
 
     TARGET_PRODUCT=$product \
     TARGET_BUILD_VARIANT=$variant \
@@ -836,6 +850,14 @@ function lunch()
     if [ $? -ne 0 ]
     then
         if [[ "$product" =~ .*_(eng|user|userdebug) ]]
+        then
+            echo
+            echo "** Don't have a product spec for: '$product'"
+            echo "** Do you have the right repo manifest?"
+            product=
+        fi
+
+        if [ -z "$product" -o -z "$variant" ]
         then
             echo "Did you mean -${product/*_/}? (dash instead of underscore)"
         fi

@@ -113,6 +113,7 @@ $(call set-device-specific-path,SENSORS,sensors,hardware/qcom/sensors)
 $(call set-device-specific-path,LOC_API,loc-api,vendor/qcom/opensource/location)
 $(call set-device-specific-path,DATASERVICES,dataservices,vendor/qcom/opensource/dataservices)
 $(call set-device-specific-path,IPACFG_MGR,ipacfg-mgr,hardware/qcom/data/ipacfg-mgr)
+$(call set-device-specific-path,POWER,power,hardware/qcom/power)
 
 $(call ril-set-path-variant,ril)
 $(call wlan-set-path-variant,wlan-caf)

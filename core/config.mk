@@ -1111,3 +1111,5 @@ ifneq ($(STAG_BUILD),)
 endif
 
 include $(BUILD_SYSTEM)/dumpvar.mk
+
+BUILD_RRO_SYSTEM_PACKAGE := $(BUILD_SYSTEM)/system_rro.mk

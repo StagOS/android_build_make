@@ -1102,3 +1102,5 @@ include $(BUILD_SYSTEM)/soong_config.mk
 endif
 
 include $(BUILD_SYSTEM)/dumpvar.mk
+
+BUILD_RRO_SYSTEM_PACKAGE := $(BUILD_SYSTEM)/system_rro.mk

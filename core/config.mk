@@ -231,6 +231,11 @@ include $(BUILD_SYSTEM)/envsetup.mk
 FIND_LEAVES_EXCLUDES := $(addprefix --prune=, $(SCAN_EXCLUDE_DIRS) .repo .git)
 
 -include vendor/extra/BoardConfigExtra.mk
+
+# General entries for project pathmap.  Any entries listed here should
+# be device and hardware independent.
+$(call project-set-path-variant,ril,TARGET_RIL_VARIANT,hardware/ril)
+
 ifneq ($(STAG_BUILD),)
 include vendor/stag/config/BoardConfigStag.mk
 endif

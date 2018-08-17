@@ -915,6 +915,11 @@ ifneq ($(sepolicy_major_vers), $(PLATFORM_SDK_VERSION))
 $(error sepolicy_major_version does not match PLATFORM_SDK_VERSION, please update.)
 endif
 
+# We modify several neverallows, so let the build proceed
+ifneq ($(TARGET_BUILD_VARIANT),user)
+SELINUX_IGNORE_NEVERALLOWS := true
+endif
+
 TOT_SEPOLICY_VERSION := 10000.0
 ifneq (REL,$(PLATFORM_VERSION_CODENAME))
     PLATFORM_SEPOLICY_VERSION := $(TOT_SEPOLICY_VERSION)

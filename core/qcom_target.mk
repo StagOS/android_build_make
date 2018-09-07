@@ -124,6 +124,9 @@ $(call ril-set-path-variant,ril)
 $(call wlan-set-path-variant,wlan-caf)
 $(call bt-vendor-set-path-variant,bt-caf)
 
+PRODUCT_CFI_INCLUDE_PATHS += \
+    hardware/qcom/wlan-caf/qcwcn/wpa_supplicant_8_lib
+
 else
 
 $(call set-device-specific-path,AUDIO,audio,hardware/qcom/audio/default)

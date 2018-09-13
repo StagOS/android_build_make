@@ -121,7 +121,7 @@ $(call set-device-specific-path,THERMAL,thermal,hardware/qcom/thermal)
 $(call set-device-specific-path,VR,vr,hardware/qcom/vr)
 
 $(call ril-set-path-variant,ril)
-$(call wlan-set-path-variant,wlan)
+$(call wlan-set-path-variant,wlan-caf)
 $(call bt-vendor-set-path-variant,bt-caf)
 
 else

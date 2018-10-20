@@ -840,6 +840,18 @@ else if get_stage("%(bcb_dev)s") == "3/3" then
   if HasVendorPartition(input_zip):
     system_progress -= 0.1
 
+  script.Print(" ")
+  script.Print("Something Elegant is taking birth ")
+  script.Print("     _______.___________.    ___       _______  ")
+  script.Print("    /       |           |   /   \     /  _____| ")
+  script.Print("   |   (----`---|  |----`  /  ^  \   |  |  __   ")
+  script.Print("    \   \       |  |      /  /_\  \  |  | |_ |  ")
+  script.Print(".----)   |      |  |     /  _____  \ |  |__| |  ")
+  script.Print("|_______/       |__|    /__/     \__\ \______|  ")
+  script.Print("================Sic Parvis Magna================")
+  script.Print("StagOS : Elegance at your Fingertips            ")
+  script.Print("Presented to you by Phenomenall && vjspranav    ")
+  script.Print("================================================")
   script.ShowProgress(system_progress, 0)
 
   # See the notes in WriteBlockIncrementalOTAPackage().

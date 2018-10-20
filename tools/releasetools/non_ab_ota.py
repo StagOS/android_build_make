@@ -213,6 +213,19 @@ else if get_stage("%(bcb_dev)s") == "3/3" then
   progress_dict = {partition: 0.1 for partition in block_diff_dict}
   progress_dict["system"] = system_progress
 
+  script.Print(" ")
+  script.Print(" ")
+  script.Print("     _______.___________.    ___       _______  ")
+  script.Print("    /       |           |   /   \     /  _____| ")
+  script.Print("   |   (----`---|  |----`  /  ^  \   |  |  __   ")
+  script.Print("    \   \       |  |      /  /_\  \  |  | |_ |  ")
+  script.Print(".----)   |      |  |     /  _____  \ |  |__| |  ")
+  script.Print("|_______/       |__|    /__/     \__\ \______|  ")
+  script.Print("================Sic Parvis Magna================")
+  script.Print("StagOS : Elegance at your Fingertips            ")
+  script.Print("Presented to you by Team Stag                   ")
+  script.Print("================================================")
+
   if target_info.get('use_dynamic_partitions') == "true":
     # Use empty source_info_dict to indicate that all partitions / groups must
     # be re-added.

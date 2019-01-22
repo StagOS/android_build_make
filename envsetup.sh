@@ -139,7 +139,6 @@ function check_product()
     fi
     if (echo -n $1 | grep -q -e "^stag_") ; then
         STAG_BUILD=$(echo -n $1 | sed -e 's/^stag_//g')
-        export STAG_NUMBER=$( (date +%s%N ; echo $STAG_BUILD; hostname) | openssl sha1 | sed -e 's/.*=//g; s/ //g' | cut -c1-10 )
     else
         STAG_BUILD=
     fi

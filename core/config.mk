@@ -225,7 +225,7 @@ include $(BUILD_SYSTEM)/envsetup.mk
 FIND_LEAVES_EXCLUDES := $(addprefix --prune=, $(SCAN_EXCLUDE_DIRS) .repo .git)
 
 ifneq ($(STAG_BUILD),)
-include vendor/stag/config/BoardConfigSTAG.mk
+include vendor/stag/config/BoardConfigStag.mk
 endif
 
 # General entries for project pathmap.  Any entries listed here should

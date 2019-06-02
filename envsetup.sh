@@ -1698,4 +1698,4 @@ addcompletions
 
 export ANDROID_BUILD_TOP=$(gettop)
 
-. $ANDROID_BUILD_TOP/vendor/stag/build/envsetup.sh
+. $ANDROID_BUILD_TOP/vendor/stag/tools/changelog.sh && . vendor/stag/build/envsetup.sh

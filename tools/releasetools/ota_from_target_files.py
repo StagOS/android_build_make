@@ -855,7 +855,7 @@ else if get_stage("%(bcb_dev)s") == "3/3" then
   script.Print("|_______/       |__|    /__/     \__\ \______|  ")
   script.Print("================Sic Parvis Magna================")
   script.Print("StagOS : Elegance at your Fingertips            ")
-  script.Print("Presented to you by Phenomenall && vjspranav    ")
+  script.Print("Presented to you by TEAM STAG  ")
   script.Print("================================================")
   script.ShowProgress(system_progress, 0)
 

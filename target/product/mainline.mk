@@ -29,4 +29,6 @@ $(call inherit-product, frameworks/base/data/sounds/AllAudio.mk)
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.config.ringtone=Ring_Synth_04.ogg
 
+ifeq ($(STAG_BUILD),)
 PRODUCT_COPY_FILES += device/sample/etc/apns-full-conf.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/apns-conf.xml
+endif

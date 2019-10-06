@@ -953,6 +953,38 @@ else if get_stage("%(bcb_dev)s") == "3/3" then
   script.Print("================================================")
   script.ShowProgress(system_progress, 0)
 
+  build = target_info.GetBuildProp("ro.build.date")
+  buildid = target_info.GetBuildProp("ro.stag.version")
+  buildtype = target_info.GetBuildProp("ro.stag.releasetype")
+  buildidn = target_info.GetBuildProp("ro.build.id")
+  buildday = target_info.GetBuildProp("ro.build.date")
+  securep = target_info.GetBuildProp("ro.build.version.security_patch")
+  device = target_info.GetBuildProp("ro.stag.device")
+  androidver = target_info.GetBuildProp("ro.build.version.release")
+  manufacturer = target_info.GetBuildProp("ro.product.manufacturer")
+  sdkver = target_info.GetBuildProp("ro.build.version.sdk")
+
+  script.Print(" **************** Information *****************");
+  script.Print(" StagOS version: %s"%(buildid));
+  script.Print("");
+  script.Print(" Android ver: %s"%(androidver));
+  script.Print("");
+  script.Print(" Security patch: %s"%(securep));
+  script.Print("");
+  script.Print(" SDK ver: %s"%(sdkver));
+  script.Print("");
+  script.Print(" Build ID: %s"%(buildidn));
+  script.Print("");
+  script.Print(" Build date: %s"%(buildday));
+  script.Print("");
+  script.Print(" Build type: %s"%(buildtype));
+  script.Print("");
+  script.Print(" Device codename: %s"%(device));
+  script.Print("");
+  script.Print(" *******************************************");
+
+
+
   def GetBlockDifference(partition):
     # Full OTA is done as an "incremental" against an empty source image. This
     # has the effect of writing new data from the package to the entire

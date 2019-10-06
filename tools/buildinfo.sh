@@ -62,5 +62,8 @@ if [ -n "$BUILD_THUMBPRINT" ] ; then
 fi
 
 echo "ro.stag.device=$STAG_DEVICE"
+echo "ro.stag.version=$StagOS_VERSION.$StagOS_BUILD"
+echo "ro.stag.releasetype=$STAG_BUILD_TYPE"
 
 echo "# end build properties"
+

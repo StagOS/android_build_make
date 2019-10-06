@@ -25,5 +25,4 @@ echo "ro.product.${partition}.device=$PRODUCT_DEVICE"
 echo "ro.product.${partition}.manufacturer=$PRODUCT_MANUFACTURER"
 echo "ro.product.${partition}.model=$PRODUCT_MODEL"
 echo "ro.product.${partition}.name=$PRODUCT_NAME"
-
 echo "# end common build properties"

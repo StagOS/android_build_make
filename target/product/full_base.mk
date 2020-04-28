@@ -22,6 +22,10 @@
 PRODUCT_PACKAGES := \
     libfwdlockengine \
     WAPPushManager
+ 
+ #Build LiveWallpaperPicker
+ PRODUCT_PACKAGES += \
+    LiveWallpapersPicker
 
 # Bluetooth:
 #   audio.a2dp.default is a system module. Generic system image includes

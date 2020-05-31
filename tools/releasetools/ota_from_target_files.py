@@ -928,10 +928,10 @@ else if get_stage("%(bcb_dev)s") == "3/3" then
   script.UnpackPackageDir("install", "/tmp/install")
   script.SetPermissionsRecursive("/tmp/install", 0, 0, 0o755, 0o644, None, None)
   script.SetPermissionsRecursive("/tmp/install/bin", 0, 0, 0o755, 0o755, None, None)
-  script.MountSys("check", sys_mount)
+  script.RunBackup("check", sys_mount)
 
   if OPTIONS.backuptool:
-    script.MountSys("backup", sys_mount)
+    script.RunBackup("backup", sys_mount)
 
   if target_info.get("system_root_image") == "true":
     sysmount = "/"

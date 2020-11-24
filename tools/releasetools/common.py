@@ -1334,7 +1334,7 @@ def _BuildBootableImage(image_name, sourcedir, fs_config_file, info_dict=None,
     img_keyblock.close()
 
   # AVB: if enabled, calculate and add hash to boot.img or recovery.img.
-  if info_dict.get("avb_enable") == "true":
+  if info_dict.get("avb_enable") == "true" and info_dict.get("avb_main_vbmeta_in_boot") != "true":
     avbtool = info_dict["avb_avbtool"]
     if partition_name == "recovery":
       part_size = info_dict["recovery_size"]
@@ -1345,6 +1345,19 @@ def _BuildBootableImage(image_name, sourcedir, fs_config_file, info_dict=None,
            partition_name]
     AppendAVBSigningArgs(cmd, partition_name)
     args = info_dict.get("avb_" + partition_name + "_add_hash_footer_args")
+    if args and args.strip():
+      cmd.extend(shlex.split(args))
+    RunAndCheckOutput(cmd)
+
+  # AVB: if vbmeta needs to be appended to boot, only add hash to recovery.img
+  if info_dict.get("avb_enable") == "true" and info_dict.get("avb_main_vbmeta_in_boot") == "true":
+    avbtool = info_dict["avb_avbtool"]
+    part_size = info_dict["recovery_size"]
+    cmd = [avbtool, "add_hash_footer", "--image", img.name,
+           "--partition_size", str(part_size), "--partition_name",
+           "recovery"]
+    AppendAVBSigningArgs(cmd, "recovery")
+    args = info_dict.get("avb_recovery_add_hash_footer_args")
     if args and args.strip():
       cmd.extend(shlex.split(args))
     RunAndCheckOutput(cmd)

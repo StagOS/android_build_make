@@ -1191,9 +1191,11 @@ endif # BUILDING_RAMDISK_IMAGE
 # This is defined here since we may be building recovery as boot
 # below and only want to define this once
 ifneq ($(strip $(BOARD_KERNEL_BINARIES)),)
-  BUILT_BOOTIMAGE_TARGET := $(foreach k,$(subst kernel,boot,$(BOARD_KERNEL_BINARIES)), $(PRODUCT_OUT)/$(k).img)
+  BUILT_BOOTIMAGE_TARGET := $(foreach k,$(subst kernel,boot,$(BOARD_KERNEL_BINARIES)), $(call intermediates-dir-for,PACKAGING,boot)/$(k).img)
+  MTK_BOOTIMAGE_TARGET := $(foreach k,$(subst kernel,boot,$(BOARD_KERNEL_BINARIES)), $(PRODUCT_OUT)/$(k).img)
 else
-  BUILT_BOOTIMAGE_TARGET := $(PRODUCT_OUT)/boot.img
+  BUILT_BOOTIMAGE_TARGET := $(call intermediates-dir-for,PACKAGING,boot)/boot.img
+  MTK_BOOTIMAGE_TARGET := $(PRODUCT_OUT)/boot.img
 endif
 
 ifdef BOARD_BOOTIMAGE_PARTITION_SIZE
@@ -1355,6 +1357,7 @@ INSTALLED_BOOTIMAGE_TARGET := $(PRODUCT_OUT)/boot.img
 $(eval $(call copy-one-file,$(BOARD_PREBUILT_BOOTIMAGE),$(INSTALLED_BOOTIMAGE_TARGET)))
 else # BOARD_PREBUILT_BOOTIMAGE not defined
 INSTALLED_BOOTIMAGE_TARGET :=
+MTK_BOOTIMAGE_TARGET :=
 endif # BOARD_PREBUILT_BOOTIMAGE
 endif # TARGET_NO_KERNEL
 
@@ -3841,6 +3844,23 @@ endif # BUILDING_VBMETA_IMAGE
 
 endif # BOARD_AVB_ENABLE
 
+ifneq ($(strip $(TARGET_NO_KERNEL)),true)
+ifeq (yes, $(strip $(MAIN_VBMETA_IN_BOOT)))
+
+ifeq (true, $(strip $(BOARD_AVB_ENABLE)))
+$(MTK_BOOTIMAGE_TARGET): $(INSTALLED_BOOTIMAGE_TARGET) $(BUILT_VBMETAIMAGE_TARGET) $(AVBTOOL)
+	@echo "Install boot image: $@"
+	$(copy-file-to-target)
+	$(hide) $(AVBTOOL) append_vbmeta_image --image $@ --partition_size $(BOARD_BOOTIMAGE_PARTITION_SIZE) --vbmeta_image $(BUILT_VBMETAIMAGE_TARGET)
+endif
+
+else
+$(MTK_BOOTIMAGE_TARGET): $(INSTALLED_BOOTIMAGE_TARGET)
+	@echo "Install boot image: $@"
+	$(copy-file-to-target)
+endif # MAIN_VBMETA_IN_BOOT
+endif # TARGET_NO_KERNEL
+
 # -----------------------------------------------------------------
 # Check VINTF of build
 
@@ -4399,6 +4419,9 @@ ifneq (,$(strip $(BOARD_CUSTOMIMAGES_PARTITION_LIST)))
 	    echo "avb_$(partition)_partition_size=$(BOARD_AVB_$(call to-upper,$(partition))_PARTITION_SIZE)"  >> $@; \
 	    echo "avb_$(partition)_image_list=$(foreach image,$(BOARD_AVB_$(call to-upper,$(partition))_IMAGE_LIST),$(notdir $(image)))" >> $@;)
 endif # BOARD_CUSTOMIMAGES_PARTITION_LIST
+ifeq (yes, $(strip $(MAIN_VBMETA_IN_BOOT)))
+	$(hide) echo "avb_main_vbmeta_in_boot=true" >> $@
+endif # MAIN_VBMETA_IN_BOOT
 ifneq (,$(strip $(BOARD_AVB_VBMETA_SYSTEM)))
 	$(hide) echo "avb_vbmeta_system=$(BOARD_AVB_VBMETA_SYSTEM)" >> $@
 	$(hide) echo "avb_vbmeta_system_args=$(BOARD_AVB_MAKE_VBMETA_SYSTEM_IMAGE_ARGS)" >> $@
@@ -4623,6 +4646,7 @@ endif
 # directories are up-to-date.
 $(BUILT_TARGET_FILES_PACKAGE): \
 	    $(INSTALLED_RAMDISK_TARGET) \
+	    $(MTK_BOOTIMAGE_TARGET) \
 	    $(INSTALLED_BOOTIMAGE_TARGET) \
 	    $(INSTALLED_VENDOR_BOOTIMAGE_TARGET) \
 	    $(INSTALLED_RADIOIMAGE_TARGET) \
@@ -4971,6 +4995,11 @@ endif
 ifeq ($(BUILD_QEMU_IMAGES),true)
 	$(hide) AVBTOOL=$(AVBTOOL) $(MK_VBMETA_BOOT_KERNEL_CMDLINE_SH) $(zip_root)/IMAGES/vbmeta.img \
 	    $(zip_root)/IMAGES/system.img $(zip_root)/IMAGES/VerifiedBootParams.textproto
+endif
+ifeq (yes, $(strip $(MAIN_VBMETA_IN_BOOT)))
+ifeq (true, $(strip $(BOARD_AVB_ENABLE)))
+	$(hide) $(AVBTOOL) append_vbmeta_image --image $(zip_root)/IMAGES/boot.img --partition_size $(BOARD_BOOTIMAGE_PARTITION_SIZE) --vbmeta_image $(zip_root)/IMAGES/vbmeta.img
+endif
 endif
 	@# Zip everything up, preserving symlinks and placing META/ files first to
 	@# help early validation of the .zip file while uploading it.

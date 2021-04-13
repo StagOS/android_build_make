@@ -827,8 +827,7 @@ function lunch()
         return 1
     fi
 
-    check_product $product
-    if [ $? -ne 0 ]
+    if ! check_product $product
     then
         # if we can't find a product, try to grab it off the StagOS-Devices GitHub
         T=$(gettop)

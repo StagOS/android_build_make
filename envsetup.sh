@@ -675,6 +675,17 @@ function lunch()
         T=$(gettop)
         C=$(pwd)
         cd $T
+        $T/vendor/stag/build/tools/stagify.py $product
+        cd $C
+        check_product $product
+    fi
+
+    if [ $? -ne 0 ]
+    then
+       # if we can't find the product, try to grab it from our github
+        T=$(gettop)
+        C=$(pwd)
+        cd $T
         $T/vendor/stag/build/tools/roomservice.py $product
         cd $C
         check_product $product

@@ -1237,7 +1237,9 @@ ifneq ($(STAG_BUILD),)
 ifneq ($(wildcard device/lineage/sepolicy/common/sepolicy.mk),)
 ## We need to be sure the global selinux policies are included
 ## last, to avoid accidental resetting by device configs
+ifneq ($(TARGET_DEVICE),avicii)
 $(eval include device/lineage/sepolicy/common/sepolicy.mk)
+endif
 endif
 endif
 

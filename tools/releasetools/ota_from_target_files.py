@@ -862,7 +862,7 @@ else if get_stage("%(bcb_dev)s") == "3/3" then
 
 
   build = target_info.GetBuildProp("ro.build.date")
-  buildid = target_info.GetBuildProp("ro.stag.version")
+  buildid = target_info.GetBuildProp("ro.stag.build.version")
   buildtype = target_info.GetBuildProp("ro.stag.releasetype")
   buildidn = target_info.GetBuildProp("ro.build.id")
   buildday = target_info.GetBuildProp("ro.build.date")

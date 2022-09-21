@@ -646,6 +646,7 @@ ifeq ($(TARGET_BUILD_TYPE),debug)
   name := $(name)_debug
 endif
 name := $(name)-apkcerts-$(FILE_NAME_TAG)
+
 intermediates := \
 	$(call intermediates-dir-for,PACKAGING,apkcerts)
 APKCERTS_FILE := $(intermediates)/$(name).txt
@@ -5536,11 +5537,12 @@ droidcore-unbundled: $(INSTALLED_MISC_INFO_TARGET)
 # This zip can be used to create an OTA package or filesystem image
 # as a post-build step.
 #
-name := $(TARGET_PRODUCT)
+name := $(STAG_VERSION)
 ifeq ($(TARGET_BUILD_TYPE),debug)
   name := $(name)_debug
 endif
-name := $(name)-target_files-$(FILE_NAME_TAG)
+#name := $(name)-target_files-$(FILE_NAME_TAG)
+name := $(name)-target_files
 
 intermediates := $(call intermediates-dir-for,PACKAGING,target_files)
 BUILT_TARGET_FILES_PACKAGE := $(intermediates)/$(name).zip

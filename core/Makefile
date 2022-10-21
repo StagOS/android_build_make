@@ -5082,7 +5082,7 @@ INTERNAL_OTATOOLS_MODULES += \
 
 ifeq (true,$(PRODUCT_SUPPORTS_VBOOT))
 INTERNAL_OTATOOLS_MODULES += \
-  futility \
+  futility-host \
   vboot_signer
 endif
 

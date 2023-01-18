@@ -6716,6 +6716,10 @@ $(call declare-container-license-deps,$(INTERNAL_UPDATE_PACKAGE_TARGET),$(BUILT_
 updatepackage: $(INTERNAL_UPDATE_PACKAGE_TARGET)
 $(call dist-for-goals,updatepackage,$(INTERNAL_UPDATE_PACKAGE_TARGET))
 
+# -----------------------------------------------------------------
+# The update OTA package
+.PHONY: otaupdatepackage
+otaupdatepackage: otapackage updatepackage
 
 # -----------------------------------------------------------------
 # dalvik something

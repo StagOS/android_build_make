@@ -218,7 +218,7 @@ function check_product()
     export STAG_BUILD
 
         TARGET_PRODUCT=$1 \
-        TARGET_RELEASE= \
+        TARGET_RELEASE=$2 \
         TARGET_BUILD_VARIANT= \
         TARGET_BUILD_TYPE= \
         TARGET_BUILD_APPS= \
@@ -830,7 +830,7 @@ function lunch()
         return 1
     fi
 
-    check_product $product
+    check_product $product $release
 
     TARGET_PRODUCT=$product \
     TARGET_BUILD_VARIANT=$variant \

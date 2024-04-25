@@ -832,9 +832,9 @@ function lunch()
         cd $T
         $T/vendor/stag/build/tools/stagify.py $product
         cd $C
-        check_product $product
+        check_product $product $release
     fi
-    if ! check_product $product
+    if ! check_product $product $release
     then
         # if we can't find a product, try to grab it off the StagOS-Devices GitHub
         T=$(gettop)
